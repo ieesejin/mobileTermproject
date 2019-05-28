@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">mobileTermproject</string>
+    <string name="app_name">Black Screen setting</string>
+    <string name="turn_on_off_overlay">Turn on/off Overlay</string>
+
 </resources>

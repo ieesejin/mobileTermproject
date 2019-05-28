@@ -8,27 +8,35 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 1;
     private Intent intent;
+    private Switch overlaySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        overlaySwitch = findViewById(R.id.switch1);
+        overlaySwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(MainActivity.this, MyService.class);
-                checkPermission();
+                if(v.getId() == R.id.switch1){
+                    if(overlaySwitch.isChecked()){
+                        intent = new Intent(MainActivity.this, MyService.class);
+                        checkPermission();
+                    } else {
+                        stopService(intent);
+                    }
+                }
             }
         });
     }
+
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {   // 마시멜로우 이상일 경우
             if (!Settings.canDrawOverlays(this)) {              // 체크

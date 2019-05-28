@@ -28,13 +28,14 @@ public class BlackService extends Service {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
+        // using for WindowManager different Flag for version
         int LAYOUT_FLAG;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
-        
+
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,

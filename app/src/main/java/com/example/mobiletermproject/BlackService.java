@@ -10,7 +10,9 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class BlackService extends Service {
     private int tapStatus;
     private int volumeStatus;
     private int tranStatus;
+    private GestureDetector gestureDetector;
     SettingsContentObserver mSettingsContentObserver;
 
     public BlackService() {
@@ -85,12 +88,24 @@ public class BlackService extends Service {
         overLayView.getBackground().setAlpha(tranStatus);
 
         tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
-        tapStatus = tapPref.getInt("tapSwitch", 0);
+        tapStatus = tapPref.getInt("tapSwitch", 1);
+        CustomGestureDetector customGestureDetector = new CustomGestureDetector();
+        gestureDetector = new GestureDetector(this, customGestureDetector);
+        gestureDetector.setOnDoubleTapListener(customGestureDetector);
+        overLayView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
 
         volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
         volumeStatus = volumePref.getInt("volumeSwitch", 1);
-        mSettingsContentObserver = new SettingsContentObserver(this,new Handler());
-        getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver );
+        if(volumeStatus == 0){
+            mSettingsContentObserver = new SettingsContentObserver(this,new Handler());
+            getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver );
+        }
     }
 
     @Override
@@ -131,23 +146,56 @@ public class BlackService extends Service {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
+            stopService(intent);
+        }
+    }
 
-            AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+    public class CustomGestureDetector implements GestureDetector.OnGestureListener,
+            GestureDetector.OnDoubleTapListener {
 
-            int delta=previousVolume-currentVolume;
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return true;
+        }
 
-            if(delta>0)
-            {
-                stopService(intent);
-            }
-            else if(delta<0)
-            {
-                stopService(intent);
-            }
-            else{
-                stopService(intent);
-            }
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            stopService(intent);
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            stopService(intent);
+            return true;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            return true;
         }
     }
 }

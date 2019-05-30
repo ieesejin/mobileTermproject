@@ -8,5 +8,49 @@
         android:id="@+id/switch1"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:switchMinWidth="60dp"
+        android:layout_margin="10dp"
         android:text="@string/turn_on_off_overlay" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:switchMinWidth="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/double_touch" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:switchMinWidth="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/volume_button" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_vertical"
+        android:text="@string/transparency" />
+    <SeekBar
+        android:id="@+id/seekTrans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="255"
+        android:max="255"/>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 </LinearLayout>

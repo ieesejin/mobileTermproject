@@ -89,16 +89,18 @@ public class BlackService extends Service {
 
         tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
         tapStatus = tapPref.getInt("tapSwitch", 1);
-        CustomGestureDetector customGestureDetector = new CustomGestureDetector();
-        gestureDetector = new GestureDetector(this, customGestureDetector);
-        gestureDetector.setOnDoubleTapListener(customGestureDetector);
-        overLayView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return true;
-            }
-        });
+        if(tapStatus == 0){
+            CustomGestureDetector customGestureDetector = new CustomGestureDetector();
+            gestureDetector = new GestureDetector(this, customGestureDetector);
+            gestureDetector.setOnDoubleTapListener(customGestureDetector);
+            overLayView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    gestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
+        }
 
         volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
         volumeStatus = volumePref.getInt("volumeSwitch", 1);
@@ -126,6 +128,7 @@ public class BlackService extends Service {
         }
         getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
     }
+
     public class SettingsContentObserver extends ContentObserver {
         int previousVolume;
         Context context;

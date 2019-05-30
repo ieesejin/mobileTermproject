@@ -48,17 +48,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
-        editTap = tapPref.edit();
         tapSwitch = findViewById(R.id.switch2);
         tapSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v.getId() == R.id.switch2){
                     if(tapSwitch.isChecked()){
+                        tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
+                        editTap = tapPref.edit();
                         editTap.putInt("tapSwitch", 0);
                         editTap.apply();
                     } else{
+                        tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
+                        editTap = tapPref.edit();
                         editTap.putInt("tapSwitch", 1);
                         editTap.apply();
                     }
@@ -66,17 +68,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
-        editVolume = volumePref.edit();
         volumeSwitch = findViewById(R.id.switch3);
         volumeSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v.getId() == R.id.switch3){
                     if(volumeSwitch.isChecked()){
+                        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
+                        editVolume = volumePref.edit();
                         editVolume.putInt("volumeSwitch", 0);
                         editVolume.apply();
                     } else{
+                        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
+                        editVolume = volumePref.edit();
                         editVolume.putInt("volumeSwitch", 1);
                         editVolume.apply();
                     }

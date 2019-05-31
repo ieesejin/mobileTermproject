@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editOption;
     private int tapStatus;
     private int transStatus;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

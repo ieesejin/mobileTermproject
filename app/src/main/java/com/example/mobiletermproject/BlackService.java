@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.Build;
@@ -30,7 +31,7 @@ public class BlackService extends Service {
     private int volumeStatus;
     private int tranStatus;
     private GestureDetector gestureDetector;
-    SettingsContentObserver mSettingsContentObserver;
+//    SettingsContentObserver mSettingsContentObserver;
 
     public BlackService() {
     }
@@ -78,6 +79,7 @@ public class BlackService extends Service {
 //                bt.setImageResource(R.mipmap.ic_launcher_round);
 //                textView.setText("on click!!");
                 stopService(intent);
+//                onDestroy();
             }
         });
 
@@ -100,12 +102,12 @@ public class BlackService extends Service {
             }
         });
 
-        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
-        volumeStatus = volumePref.getInt("volumeSwitch", 1);
-        if(volumeStatus == 0){
-            mSettingsContentObserver = new SettingsContentObserver(this,new Handler());
-            getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver );
-        }
+//        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
+//        volumeStatus = volumePref.getInt("volumeSwitch", 1);
+//        if(volumeStatus == 0){
+//            mSettingsContentObserver = new SettingsContentObserver(this,new Handler());
+//            getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver );
+//        }
     }
 
     @Override
@@ -124,31 +126,31 @@ public class BlackService extends Service {
             }
             windowManager = null;
         }
-        getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
+//        getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
     }
-    public class SettingsContentObserver extends ContentObserver {
-        int previousVolume;
-        Context context;
-
-        public SettingsContentObserver(Context c, Handler handler) {
-            super(handler);
-            context=c;
-
-            AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            previousVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-        }
-
-        @Override
-        public boolean deliverSelfNotifications() {
-            return super.deliverSelfNotifications();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            super.onChange(selfChange);
-            stopService(intent);
-        }
-    }
+//    public class SettingsContentObserver extends ContentObserver {
+//        int previousVolume;
+//        Context context;
+//
+//        public SettingsContentObserver(Context c, Handler handler) {
+//            super(handler);
+//            context=c;
+//
+//            AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+//            previousVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+//        }
+//
+//        @Override
+//        public boolean deliverSelfNotifications() {
+//            return super.deliverSelfNotifications();
+//        }
+//
+//        @Override
+//        public void onChange(boolean selfChange) {
+//            super.onChange(selfChange);
+//            stopService(intent);
+//        }
+//    }
 
     public class CustomGestureDetector implements GestureDetector.OnGestureListener,
             GestureDetector.OnDoubleTapListener {

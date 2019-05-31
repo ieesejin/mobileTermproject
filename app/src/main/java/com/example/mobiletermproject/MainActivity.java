@@ -3,6 +3,7 @@ package com.example.mobiletermproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -19,19 +20,22 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private Switch overlaySwitch;
     private Switch tapSwitch;
-    private Switch volumeSwitch;
+//    private Switch volumeSwitch;
     private SeekBar seekTrans;
     private SharedPreferences transparency;
     private SharedPreferences.Editor editTrans;
     private SharedPreferences tapPref;
     private SharedPreferences.Editor editTap;
-    private SharedPreferences volumePref;
-    private SharedPreferences.Editor editVolume;
+//    private SharedPreferences volumePref;
+//    private SharedPreferences.Editor editVolume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //21 버전 이상일 때
+        if(Build.VERSION.SDK_INT >= 21) getWindow().setStatusBarColor(Color.BLACK);
 
         overlaySwitch = findViewById(R.id.switch1);
         overlaySwitch.setOnClickListener(new View.OnClickListener() {
@@ -66,23 +70,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
-        editVolume = volumePref.edit();
-        volumeSwitch = findViewById(R.id.switch3);
-        volumeSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v.getId() == R.id.switch3){
-                    if(volumeSwitch.isChecked()){
-                        editVolume.putInt("volumeSwitch", 0);
-                        editVolume.apply();
-                    } else{
-                        editVolume.putInt("volumeSwitch", 1);
-                        editVolume.apply();
-                    }
-                }
-            }
-        });
+//        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
+//        editVolume = volumePref.edit();
+//        volumeSwitch = findViewById(R.id.switch3);
+//        volumeSwitch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(v.getId() == R.id.switch3){
+//                    if(volumeSwitch.isChecked()){
+//                        editVolume.putInt("volumeSwitch", 0);
+//                        editVolume.apply();
+//                    } else{
+//                        editVolume.putInt("volumeSwitch", 1);
+//                        editVolume.apply();
+//                    }
+//                }
+//            }
+//        });
 
         seekTrans = findViewById(R.id.seekTrans);
         seekTrans.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -135,6 +139,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(intent);
     }
 }

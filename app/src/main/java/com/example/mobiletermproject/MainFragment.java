@@ -11,6 +11,7 @@ import android.util.Log;
 import me.relex.circleindicator.CircleIndicator;
 
 public class MainFragment extends AppCompatActivity {
+
     FragmentPagerAdapter adapterViewPager;
 
     @Override
@@ -60,6 +61,8 @@ public class MainFragment extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
+
+
 
     }
 }

@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -22,13 +19,16 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private Switch overlaySwitch;
     private Switch tapSwitch;
-    private Switch volumeSwitch;
+    private Switch insideSwitch;
+    private Switch dragSwitch;
     private SeekBar seekTrans;
     private SharedPreferences option;
     private SharedPreferences.Editor editOption;
-    private Boolean onOffStatus;
-    private Boolean tapStatus;
+    private boolean onOffStatus;
+    private boolean tapStatus;
     private int transStatus;
+    private boolean insideStatus;
+    private boolean dragStatus;
 
 
     @Override
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         onOffStatus = option.getBoolean("onOff", false);
         transStatus = option.getInt("transparency", 200);
         tapStatus = option.getBoolean("tap", false);
+        insideStatus = option.getBoolean("inside", false);
+        dragStatus = option.getBoolean("drag", false);
 
         overlaySwitch = findViewById(R.id.switch1);
         overlaySwitch.setChecked(onOffStatus);
@@ -67,25 +69,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//
-//        volumeSwitch = findViewById(R.id.switch3);
-//        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
-//        editVolume = volumePref.edit();
-//        volumeSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(v.getId() == R.id.switch3){
-//                    if(volumeSwitch.isChecked()){
-//                        editVolume.putInt("volumeSwitch", 0);
-//                        editVolume.apply();
-//                    } else{
-//                        editVolume.putInt("volumeSwitch", 1);
-//                        editVolume.apply();
-//                    }
-//                }
-//            }
-//        });
-//
+        dragSwitch = findViewById(R.id.switch3);
+        dragSwitch.setChecked(dragStatus);
+        dragSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editOption.putBoolean("drag", isChecked);
+                editOption.apply();
+            }
+        });
+
+        insideSwitch = findViewById(R.id.switch4);
+        insideSwitch.setChecked(insideStatus);
+        insideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editOption.putBoolean("inside", isChecked);
+                editOption.apply();
+            }
+        });
+
         seekTrans = findViewById(R.id.seekTrans);
         seekTrans.setProgress(transStatus);
         seekTrans.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

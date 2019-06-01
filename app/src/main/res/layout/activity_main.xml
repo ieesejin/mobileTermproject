@@ -32,7 +32,7 @@
         android:layout_height="48dp"
         android:switchMinWidth="60dp"
         android:layout_margin="10dp"
-        android:text="@string/volume_button" />
+        android:text="@string/unlock_option_drag" />
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

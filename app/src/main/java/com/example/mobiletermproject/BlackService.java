@@ -4,19 +4,16 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.ContentObserver;
 import android.graphics.PixelFormat;
-import android.media.AudioManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class BlackService extends Service {
 
@@ -24,11 +21,13 @@ public class BlackService extends Service {
     View overLayView;
     private SharedPreferences option;
     private Intent intent;
-    private Boolean tapStatus;
-    private int volumeStatus;
+    private boolean tapStatus;
     private int tranStatus;
+    private boolean insideStatus;
+    private boolean dragStatus;
     private GestureDetector gestureDetector;
-//    SettingsContentObserver mSettingsContentObserver;
+    private float touchStartX;
+    private float touchStartY;
 
     public BlackService() {
     }
@@ -81,27 +80,73 @@ public class BlackService extends Service {
         overLayView.getBackground().setAlpha(tranStatus);
 
         tapStatus = option.getBoolean("tap", false);
-        if(tapStatus == true){
-            CustomGestureDetector customGestureDetector = new CustomGestureDetector();
-            gestureDetector = new GestureDetector(this, customGestureDetector);
-            gestureDetector.setOnDoubleTapListener(customGestureDetector);
-            overLayView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
+        insideStatus = option.getBoolean("inside", false);
+        dragStatus = option.getBoolean("drag", false);
+
+        CustomGestureDetector customGestureDetector = new CustomGestureDetector();
+        gestureDetector = new GestureDetector(this, customGestureDetector);
+        gestureDetector.setOnDoubleTapListener(customGestureDetector);
+        overLayView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (tapStatus) {
                     gestureDetector.onTouchEvent(event);
-                    return true;
                 }
-            });
+                if (insideStatus) {
+                    float x = event.getX();
+                    float y = event.getY();
+                    float distance = 0;
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN: {
+                            touchStartX = x;
+                            touchStartY = y;
+                            break;
+                        }
+                        case MotionEvent.ACTION_MOVE: {
+                            float dx = x - touchStartX;
+                            float dy = y - touchStartY;
+                            distance = euclideanDistance(dx, dy);
+
+                            overLayView.getBackground().setAlpha(distanceToTransparency(distance, tranStatus));
+                            break;
+                        }
+                        case MotionEvent.ACTION_CANCEL: {
+                            overLayView.getBackground().setAlpha(tranStatus);
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP: {
+                            if(dragStatus) {
+                                float dx = x - touchStartX;
+                                float dy = y - touchStartY;
+                                distance = euclideanDistance(dx, dy);
+                                if (distance > 500) {
+                                    stopSelf();
+                                }
+                            }
+                            overLayView.getBackground().setAlpha(tranStatus);
+                            break;
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    private int distanceToTransparency(float distance, int currentOpacity){
+        int opacity; // 0 ~ 255
+        int threshold = 500;
+        if ((int) distance >= threshold) {
+            opacity = 0;
+        } else {
+            opacity = (int)(((threshold - distance)/threshold) * currentOpacity);
         }
+        return opacity;
+    }
 
-
-//
-//        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
-//        volumeStatus = volumePref.getInt("volumeSwitch", 1);
-//        if(volumeStatus == 0){
-//            mSettingsContentObserver = new SettingsContentObserver(this, new Handler());
-//            getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver );
-//        }
+    private float euclideanDistance(float dx, float dy){
+        float distance = (float)Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+        return distance;
     }
 
     @Override
@@ -120,33 +165,8 @@ public class BlackService extends Service {
             }
             windowManager = null;
         }
-//        getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
     }
 
-//    public class SettingsContentObserver extends ContentObserver {
-//        int previousVolume;
-//        Context context;
-//
-//        public SettingsContentObserver(Context c, Handler handler) {
-//            super(handler);
-//            context=c;
-//
-//            AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-//            previousVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-//        }
-//
-//        @Override
-//        public boolean deliverSelfNotifications() {
-//            return super.deliverSelfNotifications();
-//        }
-//
-//        @Override
-//        public void onChange(boolean selfChange) {
-//            super.onChange(selfChange);
-//            stopService(intent);
-//        }
-//    }
-//
     public class CustomGestureDetector implements GestureDetector.OnGestureListener,
             GestureDetector.OnDoubleTapListener {
 

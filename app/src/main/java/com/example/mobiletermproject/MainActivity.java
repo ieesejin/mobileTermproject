@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
@@ -23,15 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Switch tapSwitch;
     private Switch volumeSwitch;
     private SeekBar seekTrans;
-    private SharedPreferences transparency;
-    private SharedPreferences.Editor editTrans;
-    private SharedPreferences tapPref;
-    private SharedPreferences.Editor editTap;
-    private SharedPreferences volumePref;
-    private SharedPreferences.Editor editVolume;
     private SharedPreferences option;
     private SharedPreferences.Editor editOption;
-    private int tapStatus;
+    private Boolean onOffStatus;
+    private Boolean tapStatus;
     private int transStatus;
 
 
@@ -41,49 +37,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         option = getSharedPreferences("option", Context.MODE_PRIVATE);
         editOption = option.edit();
-        transStatus = option.getInt("transparency", 255);
-        tapStatus = option.getInt("tap", 1);
+        onOffStatus = option.getBoolean("onOff", false);
+        transStatus = option.getInt("transparency", 200);
+        tapStatus = option.getBoolean("tap", false);
 
         overlaySwitch = findViewById(R.id.switch1);
-        overlaySwitch.setOnClickListener(new View.OnClickListener() {
+        overlaySwitch.setChecked(onOffStatus);
+        overlaySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-
-                if(overlaySwitch.isChecked()){
-                    intent = new Intent(MainActivity.this, MyService.class);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                intent = new Intent(MainActivity.this, MyService.class);
+                if(isChecked){
                     checkPermission();
                 } else {
                     stopService(intent);
                 }
+                editOption.putBoolean("onOff", isChecked);
+                editOption.apply();
             }
         });
 
         tapSwitch = findViewById(R.id.switch2);
-        if(tapStatus == 0){
-            tapSwitch.setChecked(true);
-        } else{
-            tapSwitch.setChecked(false);
-        }
-        tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
-        editTap = tapPref.edit();
-        tapSwitch.setOnClickListener(new View.OnClickListener() {
+        tapSwitch.setChecked(tapStatus);
+        tapSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if(v.getId() == R.id.switch2){
-                    if(tapSwitch.isChecked()){
-                        editOption.putInt("tap", 0);
-                        editOption.apply();
-                        editTap.putInt("tapSwitch", 0);
-                        editTap.apply();
-                    } else{
-                        editOption.putInt("tap", 1);
-                        editOption.apply();
-                        editTap.putInt("tapSwitch", 1);
-                        editTap.apply();
-                    }
-                }
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editOption.putBoolean("tap", isChecked);
+                editOption.apply();
             }
         });
+
 //
 //        volumeSwitch = findViewById(R.id.switch3);
 //        volumePref = getSharedPreferences("volumeSwitch", Context.MODE_PRIVATE);
@@ -108,12 +91,7 @@ public class MainActivity extends AppCompatActivity {
         seekTrans.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                transparency = getSharedPreferences("transparency", Context.MODE_PRIVATE);
-                editTrans = transparency.edit();
-                editOption.putInt("transparency", progress);
-                editOption.apply();
-                editTrans.putInt("transparency", progress);
-                editTrans.apply();
+
             }
 
             @Override
@@ -123,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                editOption.putInt("transparency", seekBar.getProgress());
+                editOption.apply();
             }
         });
     }
@@ -147,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE){
             if (Settings.canDrawOverlays(this)) {              // 체크
-                Log.d("check permission", "permission");
                 intent = new Intent(MainActivity.this, MyService.class);
                 startService(intent);
             } else{

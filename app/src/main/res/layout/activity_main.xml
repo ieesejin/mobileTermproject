@@ -37,6 +37,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+    <Switch
+        android:id="@+id/switch4"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:switchMinWidth="60dp"
+        android:layout_margin="10dp"
+        android:text="@string/seeinside" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -47,7 +58,7 @@
         android:id="@+id/seekTrans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:progress="255"
+        android:progress="200"
         android:max="255"/>
     <ProgressBar
         android:layout_width="match_parent"

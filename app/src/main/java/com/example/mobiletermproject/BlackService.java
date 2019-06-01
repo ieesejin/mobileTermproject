@@ -22,11 +22,9 @@ public class BlackService extends Service {
 
     WindowManager windowManager;
     View overLayView;
-    private SharedPreferences transparency;
-    private SharedPreferences tapPref;
-    private SharedPreferences volumePref;
+    private SharedPreferences option;
     private Intent intent;
-    private int tapStatus;
+    private Boolean tapStatus;
     private int volumeStatus;
     private int tranStatus;
     private GestureDetector gestureDetector;
@@ -70,6 +68,8 @@ public class BlackService extends Service {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         windowManager.addView(overLayView, params);
+
+        option = getSharedPreferences("option", Context.MODE_PRIVATE);
         Button btn = overLayView.findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +77,11 @@ public class BlackService extends Service {
                 stopService(intent);
             }
         });
-        transparency = getSharedPreferences("transparency", Context.MODE_PRIVATE);
-        tranStatus = transparency.getInt("transparency", 255);
+        tranStatus = option.getInt("transparency", 200);
         overLayView.getBackground().setAlpha(tranStatus);
-//
-        tapPref = getSharedPreferences("tapSwitch", Context.MODE_PRIVATE);
-        tapStatus = tapPref.getInt("tapSwitch", 1);
-        if(tapStatus == 0){
+
+        tapStatus = option.getBoolean("tap", false);
+        if(tapStatus == true){
             CustomGestureDetector customGestureDetector = new CustomGestureDetector();
             gestureDetector = new GestureDetector(this, customGestureDetector);
             gestureDetector.setOnDoubleTapListener(customGestureDetector);

@@ -4,7 +4,7 @@
     <string name="double_touch">Unlock option - Double Touch</string>
     <string name="transparency">Set Transparency</string>
     <string name="volume_button">Unlock option - Volume Button</string>
-    <string name="seeinside">seeInside</string>
+    <string name="seeinside">Drag to see Inside</string>
     <string name="unlock_option_drag">Unlock option - Drag</string>
 
 </resources>

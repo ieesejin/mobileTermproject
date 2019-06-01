@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         tapStatus = option.getBoolean("tap", false);
         insideStatus = option.getBoolean("inside", false);
         dragStatus = option.getBoolean("drag", false);
+
+        if(onOffStatus) {
+            checkPermission();
+        }
 
         overlaySwitch = findViewById(R.id.switch1);
         overlaySwitch.setChecked(onOffStatus);
@@ -111,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkPermission() {
+        intent = new Intent(MainActivity.this, MyService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {   // 마시멜로우 이상일 경우
             if (!Settings.canDrawOverlays(this)) {              // 체크
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,

@@ -1,4 +1,4 @@
-package com.example.mobiletermproject;
+package com.blackCarpet.mobiletermproject;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

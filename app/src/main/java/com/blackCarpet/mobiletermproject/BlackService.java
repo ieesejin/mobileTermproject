@@ -1,4 +1,4 @@
-package com.example.mobiletermproject;
+package com.blackCarpet.mobiletermproject;
 
 import android.app.Service;
 import android.content.Context;

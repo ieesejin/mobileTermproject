@@ -1,4 +1,4 @@
-package com.example.mobiletermproject;
+package com.blackCarpet.mobiletermproject;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

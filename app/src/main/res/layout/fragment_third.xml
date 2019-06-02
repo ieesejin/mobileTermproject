@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhole">
 
-    <EditText
-        android:id="@+id/editText"
+    <ImageView
+        android:id="@+id/img3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EditText" />
+        android:src="@drawable/screenshot32"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="30dp"
+        />
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/third_info"
+        android:layout_below="@id/img3"/>
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text3"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="#FFFFFF"
         android:background="@drawable/button_start"
         android:text="시작하기!"/>
 
-</LinearLayout>
+</RelativeLayout>
+

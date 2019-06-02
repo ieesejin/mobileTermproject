@@ -1,21 +1,21 @@
-package com.example.mobiletermproject;
+package com.blackCarpet.mobiletermproject;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
-public class SecondFragment extends Fragment {
+public class FirstFragment extends Fragment {
     // Store instance variables
     private String title;
     private int page;
 
     // newInstance constructor for creating fragment with arguments
-    public static SecondFragment newInstance(int page, String title) {
-        SecondFragment fragment = new SecondFragment();
+    public static FirstFragment newInstance(int page, String title) {
+        FirstFragment fragment = new FirstFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
@@ -36,9 +36,8 @@ public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
-        EditText tvLabel = (EditText) view.findViewById(R.id.editText);
-        tvLabel.setText(page + " -- " + title);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        TextView tvLabel = (TextView) view.findViewById(R.id.text1);
         return view;
     }
 }

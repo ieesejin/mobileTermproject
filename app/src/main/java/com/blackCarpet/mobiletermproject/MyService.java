@@ -1,4 +1,4 @@
-package com.example.mobiletermproject;
+package com.blackCarpet.mobiletermproject;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -30,13 +30,13 @@ public class MyService extends Service {
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel notificationChannel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription("BlackScreen");
+            notificationChannel.setDescription("BlackCarpet");
             notificationManager.createNotificationChannel(notificationChannel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id");
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("BlackScreen")
-                .setContentText("Click for start service")
+        builder.setSmallIcon(R.drawable.layor_icon2)
+                .setContentTitle("Black Carpet")
+                .setContentText("Click for start Screen saver")
                 .setContentIntent(pendingIntent);
 
         Notification notification = builder.build();

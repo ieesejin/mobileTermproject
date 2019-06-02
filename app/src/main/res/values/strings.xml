@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">Black Screen setting</string>
+    <string name="app_name">Black Carpet</string>
     <string name="turn_on_off_overlay">Turn on/off Overlay</string>
     <string name="double_touch">Unlock option - Double Touch</string>
     <string name="transparency">Set Opacity</string>
     <string name="volume_button">Unlock option - Volume Button</string>
     <string name="seeinside">Drag to see Inside</string>
     <string name="unlock_option_drag">Unlock option - Drag</string>
+    <string name="third_info">unlock option 을 통해 더블탭, 드래그로\n보호기를 풀어보세요.</string>
+    <string name="second_info">상태바를 내려 알림을 누르면\n스크린 보호 기능이 실행 됩니다.</string>
+    <string name="first_info">Turn on/off Overlay 스위치를 누르면\n상태바에 알림이 생성된다.</string>
 
 </resources>

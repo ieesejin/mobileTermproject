@@ -4,9 +4,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -69,13 +73,6 @@ public class BlackService extends Service {
         windowManager.addView(overLayView, params);
 
         option = getSharedPreferences("option", Context.MODE_PRIVATE);
-        Button btn = overLayView.findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopService(intent);
-            }
-        });
         tranStatus = option.getInt("transparency", 200);
         overLayView.getBackground().setAlpha(tranStatus);
 

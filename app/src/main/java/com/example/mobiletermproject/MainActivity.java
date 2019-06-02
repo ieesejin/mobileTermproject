@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editOption.putBoolean("inside", isChecked);
                 editOption.apply();
+                insideStatus = option.getBoolean("inside", false);
+                if(!insideStatus) {
+                    dragSwitch.setChecked(false);
+                }
             }
         });
 

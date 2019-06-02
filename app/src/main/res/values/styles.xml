@@ -15,5 +15,7 @@
             @drawable/splash_background
         </item>
     </style>
-
+    <style name="SettingSwitchThumb" parent="Theme.AppCompat">
+        <item name="android:thumb">@drawable/switch_thumb</item>
+    </style>
 </resources>

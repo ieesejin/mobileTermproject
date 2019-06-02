@@ -2,7 +2,7 @@
     <string name="app_name">Black Screen setting</string>
     <string name="turn_on_off_overlay">Turn on/off Overlay</string>
     <string name="double_touch">Unlock option - Double Touch</string>
-    <string name="transparency">Set Transparency</string>
+    <string name="transparency">Set Opacity</string>
     <string name="volume_button">Unlock option - Volume Button</string>
     <string name="seeinside">Drag to see Inside</string>
     <string name="unlock_option_drag">Unlock option - Drag</string>

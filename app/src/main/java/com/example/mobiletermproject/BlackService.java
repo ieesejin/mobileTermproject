@@ -110,7 +110,7 @@ public class BlackService extends Service {
                                 float dx = x - touchStartX;
                                 float dy = y - touchStartY;
                                 distance = euclideanDistance(dx, dy);
-                                if (distance > 500) {
+                                if (distance > 800) {
                                     stopSelf();
                                 }
                             }
@@ -126,7 +126,7 @@ public class BlackService extends Service {
 
     private int distanceToTransparency(float distance, int currentOpacity){
         int opacity; // 0 ~ 255
-        int threshold = 500;
+        int threshold = 800;
         if ((int) distance >= threshold) {
             opacity = 0;
         } else {

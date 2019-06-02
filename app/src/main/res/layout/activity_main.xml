@@ -1,67 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorWhole">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/layer_icon"
+        />
     <Switch
         android:id="@+id/switch1"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:switchMinWidth="60dp"
         android:layout_margin="10dp"
-        android:text="@string/turn_on_off_overlay" />
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        android:layout_marginTop="50dp"
+        android:text="@string/turn_on_off_overlay"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@drawable/switch_ex"
+        android:layout_below="@id/icon"
+        android:track="@drawable/switch_track_selector"
+        style="@style/SettingSwitchThumb"/>
     <Switch
         android:id="@+id/switch2"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:switchMinWidth="60dp"
         android:layout_margin="10dp"
-        android:text="@string/double_touch" />
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        android:text="@string/double_touch"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@drawable/switch_ex"
+        android:layout_below="@id/switch1"
+        android:track="@drawable/switch_track_selector"
+        android:thumb="@drawable/switch_thumb"/>
     <Switch
         android:id="@+id/switch3"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:switchMinWidth="60dp"
         android:layout_margin="10dp"
-        android:text="@string/unlock_option_drag" />
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+        android:text="@string/unlock_option_drag"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@drawable/switch_ex"
+        android:layout_below="@id/switch2"
+        android:track="@drawable/switch_track_selector"
+        android:thumb="@drawable/switch_thumb"/>
     <Switch
         android:id="@+id/switch4"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:switchMinWidth="60dp"
         android:layout_margin="10dp"
-        android:text="@string/seeinside" />
-    <ProgressBar
-        android:layout_width="match_parent"
+        android:text="@string/seeinside"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@drawable/switch_ex"
+        android:layout_below="@id/switch3"
+        android:track="@drawable/switch_track_selector"
+        android:thumb="@drawable/switch_thumb"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_vertical"
-        android:text="@string/transparency" />
-    <SeekBar
-        android:id="@+id/seekTrans"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="200"
-        android:max="255"/>
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-</LinearLayout>
+        android:layout_below="@id/switch4">
+        <TextView
+            android:id="@+id/txtView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingTop="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/transparency"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:background="@drawable/switch_ex_trans"
+            android:textColor="#000000"/>
+        <SeekBar
+            android:id="@+id/seekTrans"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:progress="200"
+            android:max="255"
+            android:background="@drawable/switch_ex_bar"
+            android:layout_below="@id/txtView"
+            android:thumb="@drawable/seekbar_thumb"
+            android:progressDrawable="@drawable/seekbar_track"/>
+    </RelativeLayout>
+</RelativeLayout>

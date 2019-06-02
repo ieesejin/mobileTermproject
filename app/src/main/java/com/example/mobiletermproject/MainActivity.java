@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         editOption = option.edit();
         onOffStatus = option.getBoolean("onOff", false);
         transStatus = option.getInt("transparency", 200);
-        tapStatus = option.getBoolean("tap", false);
+        tapStatus = option.getBoolean("tap", true);
         insideStatus = option.getBoolean("inside", false);
         dragStatus = option.getBoolean("drag", false);
 
@@ -71,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editOption.putBoolean("tap", isChecked);
                 editOption.apply();
+                tapStatus = option.getBoolean("tap", true);
+                dragStatus = option.getBoolean("drag", false);
+                if(!tapStatus && !dragStatus) {
+                    dragSwitch.setChecked(true);
+                }
             }
         });
 
@@ -81,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editOption.putBoolean("drag", isChecked);
                 editOption.apply();
+                if(isChecked) {
+                    insideSwitch.setChecked(true);
+                }
+                tapStatus = option.getBoolean("tap", true);
+                dragStatus = option.getBoolean("drag", false);
+                if(!tapStatus && !dragStatus) {
+                    tapSwitch.setChecked(true);
+                }
             }
         });
 
@@ -142,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     protected void onDestroy() {

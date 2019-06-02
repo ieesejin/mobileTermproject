@@ -79,7 +79,7 @@ public class BlackService extends Service {
         tranStatus = option.getInt("transparency", 200);
         overLayView.getBackground().setAlpha(tranStatus);
 
-        tapStatus = option.getBoolean("tap", false);
+        tapStatus = option.getBoolean("tap", true);
         insideStatus = option.getBoolean("inside", false);
         dragStatus = option.getBoolean("drag", false);
 
